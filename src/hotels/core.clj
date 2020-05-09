@@ -1,5 +1,6 @@
 (ns hotels.core
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [java-time :as time]))
 
 ;; Parser
 (defn remove_white_spaces
@@ -17,6 +18,15 @@
 (defn parse_bookings
   [input]
   ((comp interpret_booking_dates interpret_customer remove_white_spaces) input))
+
+;; Date
+(defn remove-day-of-week
+  [date]
+  (str/replace date #"\(.{3,4}\)" ""))
+
+(defn format_date
+  [date]
+  (time/local-date "ddMMMyyyy" (remove-day-of-week date)))
 
 ;; Domain
 (defrecord Hotel [name rating rates])
