@@ -2,6 +2,10 @@
   (:require [clojure.string :as str]
             [java-time :as time]))
 
+;; Client
+(defn read_booking_requests []
+  (str/split (slurp "resources/booking-requests") #"\n"))
+
 ;; Parser
 (defn remove_white_spaces [input]
   (str/replace input #"\s+" ""))
@@ -12,7 +16,10 @@
 (defn interpret_booking_dates [input]
   (flatten (mapv #(str/split % #",") input)))
 
-(defn parse_bookings [input]
+(defn remove-day-of-week [date]
+  (str/replace date #"\(.{3,4}\)" ""))
+
+(defn parse_booking_requests [input]
   ((comp interpret_booking_dates interpret_customer remove_white_spaces) input))
 
 ;; Date Functions
@@ -21,9 +28,6 @@
 
 (defn number-of-weekend-days [dates]
   (count (filter time/weekend? dates)))
-
-(defn remove-day-of-week [date]
-  (str/replace date #"\(.{3,4}\)" ""))
 
 (defn format_date [date]
   (time/local-date "ddMMMyyyy" (remove-day-of-week date)))
@@ -54,5 +58,12 @@
   (if (= (-> booking_request :customer_type) "Regular")
     (mapv #(hotel_regular_price_service % (-> booking_request :list_of_dates)) hotels)
     (mapv #(hotel_rewards_price_service % (-> booking_request :list_of_dates)) hotels)
+    )
+  )
+
+(defn get_all_booking_requests_service []
+  (map
+    #(Booking. (first %) (rest %))
+    (map #(parse_booking_requests %) (read_booking_requests))
     )
   )

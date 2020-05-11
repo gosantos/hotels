@@ -21,7 +21,7 @@
 
 (deftest parse-bookings-test
   (is (= ["Regular", "16Mar2009(mon)", "17Mar2009(tues)", "18Mar2009(wed)"]
-         (parse_bookings "Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)"))
+         (parse_booking_requests "Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)"))
       "given a dsadas of dates with commas, it should return a list of dates"))
 
 (deftest format-date-test
@@ -49,3 +49,13 @@
   (is (= [240 150 120]
          (hotels_price_service Hotels(Booking. "Rewards" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])))
       "given a list of hotels a booking request, it should return the prices"))
+
+(deftest read-booking-requests-test
+  (is (=  ["Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)" "Regular: 20Mar2009(fri), 21Mar2009(sat), 22Mar2009(sun)" "Rewards: 26Mar2009(thur), 27Mar2009(fri), 28Mar2009(sat)"]
+         (read_booking_requests))
+      "given a hotel and a list of dates, it should return the price"))
+
+(deftest get_all_booking_requests_service-test
+  (is (=  ["Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)" "Regular: 20Mar2009(fri), 21Mar2009(sat), 22Mar2009(sun)" "Rewards: 26Mar2009(thur), 27Mar2009(fri), 28Mar2009(sat)"]
+          (get_all_booking_requests_service))
+      "given a hotel and a list of dates, it should return the price"))
