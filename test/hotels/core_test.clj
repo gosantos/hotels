@@ -1,7 +1,8 @@
 (ns hotels.core-test
   (:require [clojure.test :refer :all]
             [hotels.core :refer :all]
-            [java-time :as time]))
+            [java-time :as time])
+  (:import (hotels.core Booking)))
 
 (deftest remove-white-spaces-test
   (is (= "Regular:16Mar2009(mon),17Mar2009(tues),18Mar2009(wed)"
@@ -31,20 +32,20 @@
          (format_date "17Mar2009(tues)"))
       "given another date as string, it should convert to a local-date object"))
 
-(deftest hotel_regular_price_service-test
+(deftest hotel-regular-price-service-test
   (is (= 270
          (hotel_regular_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
       "given a hotel and a list of dates, it should return the price"))
 
-(deftest hotel_rewards_price_service-test
+(deftest hotel-rewards-price-service-test
   (is (= 240
          (hotel_rewards_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
       "given a hotel and a list of dates, it should return the price"))
 
-(deftest hotels_price_service-test
+(deftest hotels-price-service-test
   (is (= [270 180 450]
-         (hotels_price_service Hotels [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)] "Regular"))
-      "given a hotel and a list of dates, it should return the price")
+         (hotels_price_service Hotels (Booking. "Regular" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])))
+      "given a list of hotels a booking request, it should return the prices")
   (is (= [240 150 120]
-         (hotels_price_service Hotels [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)] "Rewards"))
-      "given a hotel and a list of dates, it should return the price"))
+         (hotels_price_service Hotels(Booking. "Rewards" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])))
+      "given a list of hotels a booking request, it should return the prices"))

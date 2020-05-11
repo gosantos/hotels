@@ -50,9 +50,9 @@
     (* (-> hotel :rates :rewards_rate :weekend) (number-of-weekend-days dates))
     (* (-> hotel :rates :rewards_rate :weekday) (number-of-weekday-days dates))))
 
-(defn hotels_price_service [hotels dates customer_type]
-  (if (= customer_type "Regular")
-    (mapv #(hotel_regular_price_service % dates) hotels)
-    (mapv #(hotel_rewards_price_service % dates) hotels)
+(defn hotels_price_service [hotels booking_request]
+  (if (= (-> booking_request :customer_type) "Regular")
+    (mapv #(hotel_regular_price_service % (-> booking_request :list_of_dates)) hotels)
+    (mapv #(hotel_rewards_price_service % (-> booking_request :list_of_dates)) hotels)
     )
   )
