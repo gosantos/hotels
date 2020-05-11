@@ -31,12 +31,20 @@
          (format_date "17Mar2009(tues)"))
       "given another date as string, it should convert to a local-date object"))
 
-(deftest test-hotels-size
+(deftest hotel_regular_price_service-test
   (is (= 270
-         (hotel_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
+         (hotel_regular_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
       "given a hotel and a list of dates, it should return the price"))
 
-(deftest number-of-weekdays-hotels-size
-  (is (= 270
-         (hotel_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
+(deftest hotel_rewards_price_service-test
+  (is (= 240
+         (hotel_rewards_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
+      "given a hotel and a list of dates, it should return the price"))
+
+(deftest hotels_price_service-test
+  (is (= [270 180 450]
+         (hotels_price_service Hotels [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)] "Regular"))
+      "given a hotel and a list of dates, it should return the price")
+  (is (= [240 150 120]
+         (hotels_price_service Hotels [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)] "Rewards"))
       "given a hotel and a list of dates, it should return the price"))
