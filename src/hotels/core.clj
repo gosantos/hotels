@@ -38,5 +38,19 @@
 (def Lakewood (Hotel. "Lakewood" 3 (Rates. (Rate. 110 90) (Rate. 80 80))))
 (def Bridgewood (Hotel. "Bridgewood" 4 (Rates. (Rate. 160 60) (Rate. 110 50))))
 (def Ridgewood (Hotel. "Ridgewood" 5 (Rates. (Rate. 220 150) (Rate. 100 40))))
-(def all_hotels [Lakewood  Bridgewood  Ridgewood])
+(def all_hotels [Lakewood Bridgewood Ridgewood])
 
+;; Service
+
+(defn hotel_price_service [dates]
+  (+
+    (*
+      (-> Lakewood :rates :regular_rate :weekend)
+      (count (filter time/weekend? dates))
+      )
+    (*
+      (-> Lakewood :rates :regular_rate :weekday)
+      (count (filter time/weekday? dates))
+      )
+    )
+  )
