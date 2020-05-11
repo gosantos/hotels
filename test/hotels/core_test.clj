@@ -33,5 +33,10 @@
 
 (deftest test-hotels-size
   (is (= 270
-         (hotel_price_service [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
+         (hotel_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
+      "given a hotel and a list of dates, it should return the price"))
+
+(deftest number-of-weekdays-hotels-size
+  (is (= 270
+         (hotel_price_service Lakewood [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)]))
       "given a hotel and a list of dates, it should return the price"))

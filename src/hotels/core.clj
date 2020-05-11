@@ -20,6 +20,12 @@
   ((comp interpret_booking_dates interpret_customer remove_white_spaces) input))
 
 ;; Date
+(defn number-of-weekday-days [dates]
+  (count (filter time/weekday? dates)))
+
+(defn number-of-weekend-days [dates]
+  (count (filter time/weekend? dates)))
+
 (defn remove-day-of-week
   [date]
   (str/replace date #"\(.{3,4}\)" ""))
@@ -38,19 +44,12 @@
 (def Lakewood (Hotel. "Lakewood" 3 (Rates. (Rate. 110 90) (Rate. 80 80))))
 (def Bridgewood (Hotel. "Bridgewood" 4 (Rates. (Rate. 160 60) (Rate. 110 50))))
 (def Ridgewood (Hotel. "Ridgewood" 5 (Rates. (Rate. 220 150) (Rate. 100 40))))
-(def all_hotels [Lakewood Bridgewood Ridgewood])
+(def Hotels [Lakewood Bridgewood Ridgewood])
 
 ;; Service
-
-(defn hotel_price_service [dates]
+(defn hotel_price_service [hotel dates]
   (+
-    (*
-      (-> Lakewood :rates :regular_rate :weekend)
-      (count (filter time/weekend? dates))
-      )
-    (*
-      (-> Lakewood :rates :regular_rate :weekday)
-      (count (filter time/weekday? dates))
-      )
+    (* (-> hotel :rates :regular_rate :weekend) (number-of-weekend-days dates))
+    (* (-> hotel :rates :regular_rate :weekday) (number-of-weekday-days dates))
     )
   )
