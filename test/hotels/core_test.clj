@@ -23,10 +23,19 @@
          (parse_bookings "Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)"))
       "given a dsadas of dates with commas, it should return a list of dates"))
 
-(deftest foo-test
+(deftest format-date-test
   (is (= (time/local-date 2009 03 16)
          (format_date "16Mar2009(mon)"))
       "given a dsadas dasdsa dates with commas, it should return a list of dates")
   (is (= (time/local-date 2009 03 17)
          (format_date "17Mar2009(tues)"))
+      "given a dsadas dasdsa dates with commas, it should return a list of dates"))
+
+(deftest calculate-regular-rate-test
+  (is (= 110
+         (-> Lakewood :rates :regular_rate :weekend))))
+
+(deftest test-hotels-size
+  (is (= 3
+         (count all_hotels))
       "given a dsadas dasdsa dates with commas, it should return a list of dates"))
