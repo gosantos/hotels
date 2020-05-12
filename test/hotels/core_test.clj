@@ -44,10 +44,10 @@
 
 (deftest hotels-price-service-test
   (is (= {:name "Bridgewood", :rating 4, :price 180}
-         (hotels_price_service Hotels (Booking. "Regular" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])))
+         (hotels_price_service (Booking. "Regular" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])))
       "given a list of hotels a booking request, it should return the prices")
   (is (= {:name "Ridgewood", :rating 5, :price 120}
-         (hotels_price_service Hotels (Booking. "Rewards" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])))
+         (hotels_price_service (Booking. "Rewards" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])))
       "given a list of hotels a booking request, it should return the prices"))
 
 (deftest read-booking-requests-test
@@ -77,8 +77,8 @@
       "given a collection of hotels with prices and ratings, it should get the cheapest one the best rating"))
 
 (deftest booking-service-test
-  (is (= [(Booking. "Regular" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])
-          (Booking. "Regular" [(time/local-date 2009 03 20) (time/local-date 2009 03 21) (time/local-date 2009 03 22)])
-          (Booking. "Rewards" [(time/local-date 2009 03 26) (time/local-date 2009 03 27) (time/local-date 2009 03 28)])]
+  (is (= [{:name "Bridgewood", :price 180, :rating 4}
+          {:name "Lakewood", :price 310, :rating 3}
+          {:name "Ridgewood", :price 180, :rating 5}]
          (booking_service))
       "should return a list of booking requests"))

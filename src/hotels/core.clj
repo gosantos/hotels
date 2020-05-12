@@ -75,19 +75,17 @@
            [(:price y) (:rating x)]))
 
 
-(defn hotels_price_service [hotels booking_request]
+(defn hotels_price_service [booking_request]
   (first (sort by-price-and-rating
                (if (= (-> booking_request :customer_type) "Regular")
-                 (mapv #(hotel_regular_price_service % (-> booking_request :list_of_dates)) hotels)
-                 (mapv #(hotel_rewards_price_service % (-> booking_request :list_of_dates)) hotels)
+                 (mapv #(hotel_regular_price_service % (-> booking_request :list_of_dates)) Hotels)
+                 (mapv #(hotel_rewards_price_service % (-> booking_request :list_of_dates)) Hotels)
                  )
                )
          )
   )
 
 (defn booking_service []
-  (mapv #(parse_booking_request %) (read_booking_requests)))
-
-
-
-
+  (let [booking_requests (mapv #(parse_booking_request %) (read_booking_requests))]
+    (mapv #(hotels_price_service %) booking_requests))
+  )
