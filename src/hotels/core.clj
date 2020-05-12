@@ -45,31 +45,33 @@
 
 ;; Service
 (defn hotel_regular_price_service [hotel dates]
-  (+
-    (* (-> hotel :rates :regular_rate :weekend) (number-of-weekend-days dates))
-    (* (-> hotel :rates :regular_rate :weekday) (number-of-weekday-days dates))))
+  {
+   :name   (-> hotel :name)
+   :rating (-> hotel :rating)
+   :price  (+
+             (* (-> hotel :rates :regular_rate :weekend) (number-of-weekend-days dates))
+             (* (-> hotel :rates :regular_rate :weekday) (number-of-weekday-days dates)))
+   })
 
 (defn hotel_rewards_price_service [hotel dates]
-  (+
-    (* (-> hotel :rates :rewards_rate :weekend) (number-of-weekend-days dates))
-    (* (-> hotel :rates :rewards_rate :weekday) (number-of-weekday-days dates))))
-
-(defn hotels_price_service [hotels booking_request]
-  (if (= (-> booking_request :customer_type) "Regular")
-    (mapv #(hotel_regular_price_service % (-> booking_request :list_of_dates)) hotels)
-    (mapv #(hotel_rewards_price_service % (-> booking_request :list_of_dates)) hotels)
-    )
-  )
+  {
+   :name   (-> hotel :name)
+   :rating (-> hotel :rating)
+   :price  (+
+             (* (-> hotel :rates :rewards_rate :weekend) (number-of-weekend-days dates))
+             (* (-> hotel :rates :rewards_rate :weekday) (number-of-weekday-days dates)))
+   })
 
 (defn by-price-and-rating [x y]
   (compare [(:price x) (:rating y)]
            [(:price y) (:rating x)]))
 
-;
-;(defn get_all_booking_requests_service []
-;  (map
-;    #(Booking. (first %) (rest %))
-;    (map #(parse_booking_requests %) (read_booking_requests))
-;    )
-;  )
 
+(defn hotels_price_service [hotels booking_request]
+  (first (sort by-price-and-rating
+               (if (= (-> booking_request :customer_type) "Regular")
+                 (mapv #(hotel_regular_price_service % (-> booking_request :list_of_dates)) hotels)
+                 (mapv #(hotel_rewards_price_service % (-> booking_request :list_of_dates)) hotels)
+
+                 )))
+  )
