@@ -61,9 +61,15 @@
     )
   )
 
-(defn get_all_booking_requests_service []
-  (map
-    #(Booking. (first %) (rest %))
-    (map #(parse_booking_requests %) (read_booking_requests))
-    )
-  )
+(defn by-price-and-rating [x y]
+  (compare [(:price x) (:rating y)]
+           [(:price y) (:rating x)]))
+
+;
+;(defn get_all_booking_requests_service []
+;  (map
+;    #(Booking. (first %) (rest %))
+;    (map #(parse_booking_requests %) (read_booking_requests))
+;    )
+;  )
+
