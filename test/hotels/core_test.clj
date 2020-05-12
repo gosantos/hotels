@@ -20,7 +20,7 @@
       "given a string of dates with commas, it should return a list of dates"))
 
 (deftest parse-bookings-test
-  (is (= ["Regular", "16Mar2009(mon)", "17Mar2009(tues)", "18Mar2009(wed)"]
+  (is (= (Booking. "Regular" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])
          (parse_booking_request "Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)"))
       "given a dsadas of dates with commas, it should return a list of dates"))
 
@@ -75,3 +75,10 @@
   (is (= expected-sorted-list-of-prices
          (sort by-price-and-rating actual-list-of-price))
       "given a collection of hotels with prices and ratings, it should get the cheapest one the best rating"))
+
+(deftest booking-service-test
+  (is (= [(Booking. "Regular" [(time/local-date 2009 03 16) (time/local-date 2009 03 17) (time/local-date 2009 03 18)])
+          (Booking. "Regular" [(time/local-date 2009 03 20) (time/local-date 2009 03 21) (time/local-date 2009 03 22)])
+          (Booking. "Rewards" [(time/local-date 2009 03 26) (time/local-date 2009 03 27) (time/local-date 2009 03 28)])]
+         (booking_service))
+      "should return a list of booking requests"))
