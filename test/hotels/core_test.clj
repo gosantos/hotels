@@ -21,7 +21,7 @@
 
 (deftest parse-bookings-test
   (is (= ["Regular", "16Mar2009(mon)", "17Mar2009(tues)", "18Mar2009(wed)"]
-         (parse_booking_requests "Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)"))
+         (parse_booking_request "Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)"))
       "given a dsadas of dates with commas, it should return a list of dates"))
 
 (deftest format-date-test

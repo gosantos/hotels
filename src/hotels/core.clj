@@ -19,7 +19,7 @@
 (defn remove-day-of-week [date]
   (str/replace date #"\(.{3,4}\)" ""))
 
-(defn parse_booking_requests [input]
+(defn parse_booking_request [input]
   ((comp interpret_booking_dates interpret_customer remove_white_spaces) input))
 
 ;; Date Functions
