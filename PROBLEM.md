@@ -12,6 +12,7 @@ for rewards customer. The weekend rates are 150$ for regular customer and 40$ fo
 rewards customer.
 
 Write a program to help an online customer find the cheapest hotel.
+
 The input to the program will be a range of dates for a regular or rewards customer. The output should be the cheapest available hotel. In case of a tie, the hotel with highest rating should be returned.
 
 INPUT FORMAT:
@@ -21,19 +22,27 @@ OUTPUT FORMAT:
 <name_of_the_cheapest_hotel>
 
 INPUT 1:
+
 Regular: 16Mar2009(mon), 17Mar2009(tues), 18Mar2009(wed)
+
 OUTPUT 1:
+
 Lakewood
+
 INPUT 2:
+
 Regular: 20Mar2009(fri), 21Mar2009(sat), 22Mar2009(sun)
+
 OUTPUT 2:
+
 Bridgewood
+
 INPUT 3:
+
 Rewards: 26Mar2009(thur), 27Mar2009(fri), 28Mar2009(sat)
+
 OUTPUT 3:
+
 Ridgewood
 
-In-Office Extension:
-
-Each hotel picks black-out dates for rewards customers. 
-Black-out dates are when rewards customer cannot avail the discounted rates, they will be charged regular rates. For example, Bridgewood has picked its black out dates for New Years from 23rd December to 2nd January. Ridgewood has all the entire three months of July, August, September as black-out dates for summer.
+Each hotel picks black-out dates for rewards customers. Black-out dates are when rewards customer cannot avail the discounted rates, they will be charged regular rates. For example, Bridgewood has picked its black out dates for New Years from 23rd December to 2nd January. Ridgewood has all the entire three months of July, August, September as black-out dates for summer.
