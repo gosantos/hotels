@@ -85,7 +85,11 @@
          )
   )
 
-(defn booking_service []
+(defn booking_controller []
   (let [booking_requests (mapv #(parse_booking_request %) (read_booking_requests))]
-    (mapv #(hotels_price_service %) booking_requests))
-  )
+    (mapv #(hotels_price_service %) booking_requests)))
+
+
+(defn -main
+  []
+  (pprint (booking_controller)))

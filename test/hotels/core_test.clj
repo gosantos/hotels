@@ -80,5 +80,5 @@
   (is (= [{:name "Bridgewood", :price 180, :rating 4}
           {:name "Lakewood", :price 310, :rating 3}
           {:name "Ridgewood", :price 180, :rating 5}]
-         (booking_service))
+         (booking_controller))
       "should return a list of booking requests"))
